@@ -3,10 +3,13 @@ This is an [Alfred v2](http://www.alfredapp.com) workflow to access
 the most recent downloads in the Downloads folder.
 
 The items are sorted in decreasing order based on the time they
-are added to the folder. There are two operations on the selected item:
+are added to the folder. The item is filtered by testing whether
+the query is a subsequence (need not be consecutive) of it.  
+
+There are two operations on the selected item:
 
 1. open with default application (default)
-2. reveal in Finder (with "option" key)
+2. reveal in Finder (holding "option" key)
 
 # Installation
 The scripts in the workflow use Ruby gems 'amatch' and 'nokogiri',

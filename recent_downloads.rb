@@ -28,7 +28,7 @@ File.open(Data_File, "w") do |file|
   results.each {|x| file.puts x}
 end
 
-pattern = Regexp.compile("#{[*ARGV[0]] * ".*"}", true)
+pattern = Regexp.compile("#{[*ARGV[0].chars] * ".*"}", true)
 results.delete_if {|x| (x =~ pattern) == nil}
 
 # construct feedback
