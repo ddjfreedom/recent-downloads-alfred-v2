@@ -14,7 +14,7 @@ class Feedback
 
   def add_item(opts = {})
     opts[:subtitle] ||= ""
-    opts[:icon] ||= "icon.png"
+    opts[:icon] ||= {:type => "default", :name => "icon.png"}
     opts[:uid] ||= opts[:title]
     opts[:arg] ||= opts[:title]
     opts[:valid] ||= "yes"
@@ -49,7 +49,12 @@ class Feedback
           xml.item({:uid => item[:uid], :arg => item[:arg], :valid => item[:valid], :autocomplete => item[:autocomplete]}) do
             xml.title item[:title]
             xml.subtitle item[:subtitle]
-            xml.icon item[:icon]
+            case item[:icon][:type]
+            when "default"
+              xml.icon item[:icon][:name]
+            when "fileicon"
+              xml.icon({:type => "fileicon"}, item[:icon][:name])
+            end
           end
         end
       end

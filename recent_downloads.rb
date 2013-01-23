@@ -36,7 +36,8 @@ feedback = Feedback.new
 if results.length > 0
   results.each do |path|
     fullpath = File.expand_path path
-    feedback.add_item({:title => path, :subtitle => "Open File", :arg => fullpath})
+    feedback.add_item({:title => path, :subtitle => "Open File", :arg => fullpath,
+                        :icon => {:type => "fileicon", :name => fullpath}})
   end
 else
   feedback.add_item({:title => "No Match", :valid => "no"})
