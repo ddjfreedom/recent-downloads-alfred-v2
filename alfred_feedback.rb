@@ -1,15 +1,11 @@
-require "amatch"
 require "nokogiri"
-
-include Amatch
 
 class Feedback
 
   attr_accessor :items
 
-  def initialize(threshold = 0.45)
+  def initialize
     @items = []
-    @threshold = threshold
   end
 
   def add_item(opts = {})
@@ -21,25 +17,6 @@ class Feedback
     opts[:autocomplete] ||= opts[:title]
 
     @items << opts unless opts[:title].nil?
-  end
-
-  def items_with_score(query = "")
-    @items.map do |item|
-      item[:score] = query.jaro_similar(item[:title])
-      item
-    end
-  end
-
-  def filtered_items(query)
-    return @items if query.strip.empty?
-
-    items_with_score(query).select do |item|
-      item[:score] > @threshold
-    end.sort{ |a,b| b[:score] <=> a[:score] }
-  end
-
-  def filter(query)
-    to_xml(filtered_items(query))
   end
 
   def to_xml(items = @items)

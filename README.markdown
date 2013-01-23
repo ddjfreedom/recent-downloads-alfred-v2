@@ -10,13 +10,14 @@ There are two operations on the selected item:
 
 1. open with default application (default)
 2. reveal in Finder (holding "option" key)
+3. delete (holding "ctrl" key)
 
 # Installation
-The scripts in the workflow use Ruby gems 'amatch' and 'nokogiri',
+The scripts in the workflow use Ruby gems 'nokogiri',
 so please make sure they are installed:
 
 ```sh
-sudo /usr/bin/gem install amatch nokogiri
+sudo /usr/bin/gem install nokogiri
 ```
 
 Then
