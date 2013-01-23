@@ -1,8 +1,10 @@
 require 'time'
 load "alfred_feedback.rb"
 
-Data_File = File.expand_path("recent_downloads.txt",
-                             "~/Library/Application Support/Alfred 2/Workflow Data")
+Data_Dir = File.expand_path("recentdownloads.ddjfreedom",
+                            "~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/") 
+Dir.mkdir Data_Dir if !File.exist? Data_Dir
+Data_File = File.expand_path("recent_downloads.txt", Data_Dir)
 DIR = File.expand_path "~/Downloads"
 
 Dir.chdir DIR
