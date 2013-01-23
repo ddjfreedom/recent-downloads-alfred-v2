@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>recentdownloads.ddjfreedom</string>
+	<key>connections</key>
+	<dict>
+		<key>E87F5100-52C4-4CFD-BD10-56A5F9FDB1BC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>56AFA30C-27AA-4FA0-9394-BD21AFA0BDB3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>A6509700-CBFC-4EB8-90C4-0613AF7C07FB</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Reveal in Finder</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>B4861326-BB43-4222-A7F4-D21ED1C0E3D8</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
+				<key>modifiersubtext</key>
+				<string>Delete file</string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Dajun Duan</string>
+	<key>description</key>
+	<string>Open or Reveal the recent downloads in Downloads folder</string>
+	<key>name</key>
+	<string>Recent Downloads</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict/>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>56AFA30C-27AA-4FA0-9394-BD21AFA0BDB3</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>recent</string>
+				<key>script</key>
+				<string>/usr/bin/ruby -rrubygems recent_downloads.rb "{query}"</string>
+				<key>subtext</key>
+				<string>Open or Reveal Recent Downloads</string>
+				<key>title</key>
+				<string>Recent Downloads</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>E87F5100-52C4-4CFD-BD10-56A5F9FDB1BC</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.action.revealfile</string>
+			<key>uid</key>
+			<string>A6509700-CBFC-4EB8-90C4-0613AF7C07FB</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>rm {query}</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>B4861326-BB43-4222-A7F4-D21ED1C0E3D8</string>
+		</dict>
+	</array>
+	<key>uidata</key>
+	<dict>
+		<key>56AFA30C-27AA-4FA0-9394-BD21AFA0BDB3</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>A6509700-CBFC-4EB8-90C4-0613AF7C07FB</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>B4861326-BB43-4222-A7F4-D21ED1C0E3D8</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
+		<key>E87F5100-52C4-4CFD-BD10-56A5F9FDB1BC</key>
+		<dict>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>https://github.com/ddjfreedom/recent-downloads-alfred-v2</string>
+</dict>
+</plist>
