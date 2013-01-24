@@ -68,7 +68,7 @@
 				<key>keyword</key>
 				<string>recent</string>
 				<key>script</key>
-				<string>/usr/bin/ruby -rrubygems recent_downloads.rb "{query}"</string>
+				<string>/usr/bin/ruby recent_downloads.rb "{query}"</string>
 				<key>subtext</key>
 				<string>Open or Reveal Recent Downloads</string>
 				<key>title</key>

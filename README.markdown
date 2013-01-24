@@ -14,14 +14,6 @@ There are two operations on the selected item:
 4. move to trash (holding "cmd" key)
 
 # Installation
-The scripts in the workflow use Ruby gems 'nokogiri',
-so please make sure they are installed:
-
-```sh
-sudo /usr/bin/gem install nokogiri
-```
-
-Then
 
 1. Download and unpack the .zip archive.
 2. Double-click the "Recent Downloads.alfredworkflow" to install.
