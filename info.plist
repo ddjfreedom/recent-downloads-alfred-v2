@@ -110,7 +110,7 @@
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
-				<string>mv {query} ~/.Trash</string>
+				<string>osascript -e 'tell application "Finder" to delete POSIX file "{query}"'</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
