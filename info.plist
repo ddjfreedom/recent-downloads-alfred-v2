@@ -87,7 +87,7 @@
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
-				<string>rm {query}</string>
+				<string>rm -rf {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
