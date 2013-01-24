@@ -30,7 +30,15 @@
 				<key>modifiers</key>
 				<integer>262144</integer>
 				<key>modifiersubtext</key>
-				<string>Delete file</string>
+				<string>Delete</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>5ED38895-9385-4E48-AA95-9276C6414F08</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Move to Trash</string>
 			</dict>
 		</array>
 	</dict>
@@ -87,7 +95,7 @@
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
-				<string>rm {query}</string>
+				<string>rm -rf {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -96,6 +104,21 @@
 			<key>uid</key>
 			<string>B4861326-BB43-4222-A7F4-D21ED1C0E3D8</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>mv {query} ~/.Trash</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>5ED38895-9385-4E48-AA95-9276C6414F08</string>
+		</dict>
 	</array>
 	<key>uidata</key>
 	<dict>
@@ -103,6 +126,11 @@
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
+		</dict>
+		<key>5ED38895-9385-4E48-AA95-9276C6414F08</key>
+		<dict>
+			<key>ypos</key>
+			<real>380</real>
 		</dict>
 		<key>A6509700-CBFC-4EB8-90C4-0613AF7C07FB</key>
 		<dict>
