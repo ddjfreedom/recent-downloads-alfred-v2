@@ -11,6 +11,7 @@ There are two operations on the selected item:
 1. open with default application (default)
 2. reveal in Finder (holding "option" key)
 3. delete (holding "ctrl" key)
+4. move to trash (holding "cmd" key)
 
 # Installation
 The scripts in the workflow use Ruby gems 'nokogiri',
