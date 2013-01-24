@@ -1,4 +1,4 @@
-require "nokogiri"
+require "rexml/document"
 
 class Feedback
 
@@ -20,24 +20,27 @@ class Feedback
   end
 
   def to_xml(items = @items)
-    builder = Nokogiri::XML::Builder.new do |xml|
-      xml.items do
-        items.each do |item|
-          xml.item({:uid => item[:uid], :arg => item[:arg], :valid => item[:valid], :autocomplete => item[:autocomplete]}) do
-            xml.title item[:title]
-            xml.subtitle item[:subtitle]
-            case item[:icon][:type]
-            when "default"
-              xml.icon item[:icon][:name]
-            when "fileicon"
-              xml.icon({:type => "fileicon"}, item[:icon][:name])
-            end
-          end
-        end
-      end
+    document = REXML::Element.new("items")
+    items.each do |item|
+      new_item = REXML::Element.new('item')
+      new_item.add_attributes({
+        'uid'          => item[:uid], 
+        'arg'          => item[:arg], 
+        'valid'        => item[:valid], 
+        'autocomplete' => item[:autocomplete]
+      })
+      
+      REXML::Element.new("title", new_item).text    = item[:title]
+      REXML::Element.new("subtitle", new_item).text = item[:subtitle]
+      
+      icon = REXML::Element.new("icon", new_item)
+      icon.text = item[:icon][:name]
+      icon.add_attributes('type' => 'fileicon') if item[:icon][:type] == "fileicon"
+      
+      document << new_item
     end
-
-    builder.to_xml
+    
+    document.to_s
   end
 
 end
