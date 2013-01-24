@@ -110,7 +110,12 @@
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
-				<string>mv {query} ~/.Trash</string>
+				<string>filepath="{query}"
+# replace " with \" to prevent closing the quotes in applescript
+# too early
+filepath=${filepath//\"/'\"'}
+osascript -e 'tell application "Finder" to delete POSIX file "'"$filepath"'"'
+</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
