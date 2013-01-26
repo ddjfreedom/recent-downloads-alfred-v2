@@ -1,3 +1,21 @@
+require 'yaml'
+Config_Dir = File.expand_path "recentdownloads.ddjfreedom", "~/Library/Application Support/Alfred 2/Workflow Data/"
+Dir.mkdir Config_Dir unless File.exist? Config_Dir
+Config_File = File.expand_path "config.yaml", Config_Dir
+
+if File.exist? Config_File
+  config = File.open(Config_File, "r") {|file| YAML.load file}
+else
+  config = {"install_action" => "ask", "auto_start" => "ask"}
+  File.open(Config_File, "w") {|file| YAML.dump config, file}
+end
+
+unless ["ask", "install", "open", "cancel"].include?(config["install_action"]) &&
+    ["ask", "always", "never"].include?(config["auto_start"])
+  puts "Error: Invalid Configuration"
+  exit 0
+end
+
 need_install = case File.extname ARGV[0]
                when ".app"
                  $QUESTION = "#{ARGV[0]} is an application.\n\nDo you want to open it at the downloaded location or install it?"
@@ -13,6 +31,7 @@ need_install = case File.extname ARGV[0]
                end
 
 if need_install
+  action = config["install_action"].capitalize
   action = `osascript 2> /dev/null <<-EOF
                 tell application "System Events"
                     try
@@ -23,10 +42,10 @@ if need_install
                     end try
                     return answer
             end tell
-            EOF`.strip
+            EOF`.strip if action == "Ask"
   case action
   when "Install"
-    output = `/bin/bash installSoftware.sh #{ARGV[0]}`
+    output = `/bin/bash installSoftware.sh -s #{config["auto_start"]} #{ARGV[0]}`
     puts output
   when "Open"
     `open #{ARGV[0]}`

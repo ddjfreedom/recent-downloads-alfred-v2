@@ -18,6 +18,14 @@ There are two operations on the selected item:
 3. delete (holding "ctrl" key)
 4. move to trash (holding "cmd" key)
 
+The installation behavior can be controlled by `config.yaml` at
+`~/Library/Application Support/Alfred 2/Workflow Data/recentdownloads.ddjfreedom/config.yaml`:
+
+| Name | Possible Values |
+|:-----|:----------------|
+| `install_action` | `ask`, `install`, `open`, `cancel` |
+| `auto_start` | `ask`, `always`, `never`|
+
 # Installation
 ## AlfPT
 Recent Downloads is now on AlfPT:
