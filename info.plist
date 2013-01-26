@@ -6,11 +6,22 @@
 	<string>recentdownloads.ddjfreedom</string>
 	<key>connections</key>
 	<dict>
+		<key>2F377015-2088-413D-8A95-33ED6CBD7A8B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C7A50D51-1AFA-4D7B-B31C-5D8CF9E5B0C2</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>E87F5100-52C4-4CFD-BD10-56A5F9FDB1BC</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>56AFA30C-27AA-4FA0-9394-BD21AFA0BDB3</string>
+				<string>2F377015-2088-413D-8A95-33ED6CBD7A8B</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -46,17 +57,33 @@
 	<string>Dajun Duan</string>
 	<key>description</key>
 	<string>Open or Reveal the recent downloads in Downloads folder</string>
+	<key>disabled</key>
+	<false/>
 	<key>name</key>
 	<string>Recent Downloads</string>
 	<key>objects</key>
 	<array>
 		<dict>
 			<key>config</key>
-			<dict/>
+			<dict>
+				<key>escaping</key>
+				<integer>38</integer>
+				<key>script</key>
+				<string>output=`/usr/bin/ruby default_action.rb "{query}"`
+IFS=$'\n'
+for line in $output
+do
+    echo $line
+done
+unset IFS
+</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.openfile</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>56AFA30C-27AA-4FA0-9394-BD21AFA0BDB3</string>
+			<string>2F377015-2088-413D-8A95-33ED6CBD7A8B</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -124,10 +151,33 @@ osascript -e 'tell application "Finder" to delete POSIX file "'"$filepath"'"'
 			<key>uid</key>
 			<string>5ED38895-9385-4E48-AA95-9276C6414F08</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Recent Downloads</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>C7A50D51-1AFA-4D7B-B31C-5D8CF9E5B0C2</string>
+		</dict>
 	</array>
 	<key>uidata</key>
 	<dict>
-		<key>56AFA30C-27AA-4FA0-9394-BD21AFA0BDB3</key>
+		<key>2F377015-2088-413D-8A95-33ED6CBD7A8B</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
@@ -146,6 +196,11 @@ osascript -e 'tell application "Finder" to delete POSIX file "'"$filepath"'"'
 		<dict>
 			<key>ypos</key>
 			<real>250</real>
+		</dict>
+		<key>C7A50D51-1AFA-4D7B-B31C-5D8CF9E5B0C2</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
 		</dict>
 		<key>E87F5100-52C4-4CFD-BD10-56A5F9FDB1BC</key>
 		<dict>
