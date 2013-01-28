@@ -45,13 +45,13 @@ if need_install
             EOF`.strip if action == "Ask"
   case action
   when "Install"
-    output = `/bin/bash installSoftware.sh -s #{config["auto_start"]} #{ARGV[0]}`
+    output = `/bin/bash installSoftware.sh -s #{config["auto_start"]} "#{ARGV[0]}"`
     puts output
   when "Open"
-    `open #{ARGV[0]}`
+    `open "#{ARGV[0]}"`
   else
     # Do nothing
   end
 else
-  `open #{ARGV[0]}`
+  `open "#{ARGV[0]}"`
 end
