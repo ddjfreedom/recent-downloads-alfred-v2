@@ -3,6 +3,7 @@ require "rexml/document"
 class Feedback
 
   attr_accessor :items
+  @@time = Time.now.to_s
 
   def initialize
     @items = []
@@ -12,6 +13,7 @@ class Feedback
     opts[:subtitle] ||= ""
     opts[:icon] ||= {:type => "default", :name => "icon.png"}
     opts[:uid] ||= opts[:title]
+    opts[:uid] += @@time
     opts[:arg] ||= opts[:title]
     opts[:valid] ||= "yes"
     opts[:autocomplete] ||= opts[:title]
