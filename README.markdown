@@ -4,7 +4,7 @@ the most recent downloads in the Downloads folder.
 
 The items are sorted in decreasing order based on the time they
 are added to the folder. The item is filtered by testing whether
-the query is a subsequence (need not be consecutive) of it.  
+the query is a subsequence (need not be consecutive) of it.
 
 There are two operations on the selected item:
 
@@ -23,14 +23,14 @@ The installation behavior can be controlled by `config.yaml` at
 
 | Name | Possible Values |
 |:-----|:----------------|
-| `install_action` | `ask`, `install`, `open`, `cancel` |
+| `install_action` | `ask`, `install`, `open` |
 | `auto_start` | `ask`, `always`, `never`|
 
 # Installation
 ## AlfPT
 Recent Downloads is now on AlfPT:
-    
->    `alfpt install Recent Downloads`
+
+    `alfpt install Recent Downloads`
 
 ## Manual
 1. Download and unpack the .zip archive.
