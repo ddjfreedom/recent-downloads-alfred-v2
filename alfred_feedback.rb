@@ -17,7 +17,7 @@ class Feedback
     opts[:arg] ||= opts[:title]
     opts[:valid] ||= "yes"
     opts[:autocomplete] ||= opts[:title]
-
+    opts[:type] = "file"
     @items << opts unless opts[:title].nil?
   end
 
@@ -29,7 +29,8 @@ class Feedback
         'uid'          => item[:uid], 
         'arg'          => item[:arg], 
         'valid'        => item[:valid], 
-        'autocomplete' => item[:autocomplete]
+        'autocomplete' => item[:autocomplete],
+        'type'         => item[:type]
       })
       
       REXML::Element.new("title", new_item).text    = item[:title]
