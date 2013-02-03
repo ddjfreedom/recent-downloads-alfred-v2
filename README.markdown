@@ -31,11 +31,11 @@ The installation behavior can be controlled by `config.yaml` at
 Recent Downloads workflow can display items in some specified subfolders along with everything in `~/Downloads`. The value for `subfolders` in `config.yaml` can be `:all`, `:none`, or a list of entries. Each entry can be a path or a hash:
 
 ```no-highlight
-folder: <path>
+folder: <path, :all, or :none>
 depth: <a number >= 1> (default to 1)
 exclude: <true or false> (default to false)
 ```
-where `depth` controls how deep to go down the file system tree starting from `folder`, and `exclude` controls whether the `folder` itself is included in the result.
+where `depth` controls how deep to go down the file system tree starting from `folder`, and `exclude` controls whether the `folder` itself is included in the result. `:all` and `:none` will override all other settings (whichever appears first).
 
 ### Examples
 Suppose `~/Downloads` is as following
