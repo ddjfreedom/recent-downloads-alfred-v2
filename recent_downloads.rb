@@ -39,7 +39,7 @@ results = []
 File.open(Data_File, "r") do |file|
   content = file.gets(nil)
   results += content.split "\n" if content
-end if File.exist? Data_File
+end if File.exist?(Data_File) && File.mtime($config.config_file_path) < File.mtime(Data_File)
 
 entries = get_entries ".", 1
 excludes = [File.expand_path(".")]

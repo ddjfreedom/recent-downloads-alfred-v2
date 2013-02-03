@@ -22,7 +22,7 @@ module RDW
     Dir.mkdir VOLATILE_DIR unless File.exist? VOLATILE_DIR
     Dir.mkdir NONVOLATILE_DIR unless File.exist? NONVOLATILE_DIR
 
-    attr_reader :base_dir
+    attr_reader :base_dir, :config_file_path
 
     def initialize
       @config_file_path = File.expand_path "config.yaml", NONVOLATILE_DIR
