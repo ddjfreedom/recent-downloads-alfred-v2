@@ -1,5 +1,5 @@
 load "config.rb"
-config = Config.new
+config = RDW::Config.new
 unless ["ask", "install", "open"].include?(config["install_action"]) &&
     ["ask", "always", "never"].include?(config["auto_start"])
   puts "Error: Invalid Configuration"

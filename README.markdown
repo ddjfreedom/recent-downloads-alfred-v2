@@ -25,7 +25,60 @@ The installation behavior can be controlled by `config.yaml` at
 |:-----|:----------------|
 | `install_action` | `ask`, `install`, `open` |
 | `auto_start` | `ask`, `always`, `never`|
+| `subfolders` | `:all`, `:none`, a list of entries |
 
+## Subfolders
+Recent Downloads workflow can display items in some specified subfolders along with everything in `~/Downloads`. The value for `subfolders` in `config.yaml` can be `:all`, `:none`, or a list of entries. Each entry can be a path or a hash:
+
+```no-highlight
+folder: <path>
+depth: <a number >= 1> (default to 1)
+exclude: <true or false> (default to false)
+```
+where `depth` controls how deep to go down the file system tree starting from `folder`, and `exclude` controls whether the `folder` itself is included in the result.
+
+### Examples
+Suppose `~/Downloads` is as following
+```no-highlight
++-~/Downloads
+  +-a/
+  | +-aa.pdf
+  | +-ab/
+  |   +-pic.jpg
+  |   +-e/
+  |     +-f.img
+  +-b/
+  | +-ba/
+  |   +-baa/
+  |   | +-foo/
+  |   | |   +-bar.c
+  |   | +-bar/
+  |   |   +-foo/
+  |   |     +-foo.c
+  |   +-bab.xml
+  +-c/
+    +-imgs/
+      +-img.png
+```
+If `config.yaml` has the following value
+```no-highlight
+subfolders:
+-
+    folder: "a"
+    exclude: false
+    depth: 2
+-
+    folder: "b"
+    exclude: true
+-
+	"c"
+```
+the result will be
+```no-highlight
+a, a/aa.pdf, a/ab, a/ab/pic.jpg, a/ab/e
+b/ba
+c, c/imgs
+```
 # Installation
 ## AlfPT
 Recent Downloads is now on AlfPT:
