@@ -60,8 +60,9 @@ File.open(Data_File, "w") do |file|
   results.each {|x| file.puts x}
 end
 
-pattern = Regexp.compile("#{[*ARGV[0].chars] * ".*"}", true)
-results.delete_if {|x| (x =~ pattern) == nil}
+query = ARGV[0].gsub(/\s+/, "")
+pattern = Regexp.compile("#{[*query.chars.to_a.map! {|c| Regexp.escape c}] * ".*"}", true)
+results.delete_if {|x| (File.basename(x) =~ pattern) == nil}
 
 # construct feedback
 feedback = Feedback.new
