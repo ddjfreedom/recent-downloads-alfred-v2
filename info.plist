@@ -68,6 +68,8 @@
 			<dict>
 				<key>escaping</key>
 				<integer>38</integer>
+				<key>normalisation</key>
+				<integer>0</integer>
 				<key>script</key>
 				<string>output=`/usr/bin/ruby default_action.rb "{query}"`
 IFS=$'\n'
@@ -94,6 +96,8 @@ unset IFS
 				<integer>0</integer>
 				<key>keyword</key>
 				<string>recent</string>
+				<key>normalisation</key>
+				<integer>0</integer>
 				<key>script</key>
 				<string>/usr/bin/ruby recent_downloads.rb "{query}"</string>
 				<key>subtext</key>
@@ -121,6 +125,8 @@ unset IFS
 			<dict>
 				<key>escaping</key>
 				<integer>63</integer>
+				<key>normalisation</key>
+				<integer>0</integer>
 				<key>script</key>
 				<string>rm -rf {query}</string>
 				<key>type</key>
@@ -136,6 +142,8 @@ unset IFS
 			<dict>
 				<key>escaping</key>
 				<integer>38</integer>
+				<key>normalisation</key>
+				<integer>0</integer>
 				<key>script</key>
 				<string>filepath="{query}"
 # replace " with \" to prevent closing the quotes in applescript

@@ -1,10 +1,12 @@
 require 'time'
+require 'find'
 load "alfred_feedback.rb"
+load "config.rb"
 
-Data_Dir = File.expand_path("recentdownloads.ddjfreedom",
-                            "~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/") 
-Dir.mkdir Data_Dir if !File.exist? Data_Dir
-Data_File = File.expand_path("recent_downloads.txt", Data_Dir)
+$config = RDW::Config.new
+
+Data_File = File.expand_path "recent_downloads.txt", RDW::Config::VOLATILE_DIR
+
 DIR = File.expand_path "~/Downloads"
 
 Dir.chdir DIR
@@ -13,13 +15,41 @@ def time_added(entry)
   Time.parse time
 end
 
+def get_entries(dir, max_depth)
+  xs = []
+  dir = File.expand_path dir
+  max_depth += dir.split(File::SEPARATOR).count
+  Find.find(dir) do |path|
+    if RDW.directory? path
+      if path.split(File::SEPARATOR).count < max_depth
+        xs <<= path
+        next
+      elsif path.split(File::SEPARATOR).count == max_depth
+        xs <<= path
+      end
+    elsif !RDW.hidden? path
+      xs <<= path
+    end
+    Find.prune
+  end
+  xs
+end
+
 results = []
 File.open(Data_File, "r") do |file|
   content = file.gets(nil)
   results += content.split "\n" if content
 end if File.exist? Data_File
 
-entries = Dir.entries(".").delete_if {|x| x.start_with? "."}
+entries = get_entries ".", 1
+excludes = [File.expand_path(".")]
+$config.subfolders.each do |x|
+  next if !File.exist? x["folder"]
+  excludes <<= File.expand_path(x["folder"]) if x["exclude"]
+  entries += get_entries x["folder"], x["depth"]
+end
+entries -= excludes
+entries.uniq!
 results = results & entries # remove entries that are no longer in the Downloads folder
 entries = entries - results # process only newer ones
 
@@ -38,7 +68,7 @@ feedback = Feedback.new
 if results.length > 0
   results.each do |path|
     fullpath = File.expand_path path
-    feedback.add_item({:title => path, :subtitle => "Open File", :arg => fullpath,
+    feedback.add_item({:title => File.basename(path), :subtitle => path, :arg => fullpath,
                         :icon => {:type => "fileicon", :name => fullpath}})
   end
 else

@@ -1,15 +1,5 @@
-require 'yaml'
-Config_Dir = File.expand_path "recentdownloads.ddjfreedom", "~/Library/Application Support/Alfred 2/Workflow Data/"
-Dir.mkdir Config_Dir unless File.exist? Config_Dir
-Config_File = File.expand_path "config.yaml", Config_Dir
-
-if File.exist? Config_File
-  config = File.open(Config_File, "r") {|file| YAML.load file}
-else
-  config = {"install_action" => "ask", "auto_start" => "ask"}
-  File.open(Config_File, "w") {|file| YAML.dump config, file}
-end
-
+load "config.rb"
+config = RDW::Config.new
 unless ["ask", "install", "open"].include?(config["install_action"]) &&
     ["ask", "always", "never"].include?(config["auto_start"])
   puts "Error: Invalid Configuration"
