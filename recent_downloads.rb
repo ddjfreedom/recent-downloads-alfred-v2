@@ -12,7 +12,11 @@ DIR = File.expand_path "~/Downloads"
 Dir.chdir DIR
 def time_added(entry)
   time = `mdls -name kMDItemDateAdded -raw "#{entry}"`
-  Time.parse time
+  if time == "(null)"
+    return File.mtime entry
+  else
+    return Time.parse time
+  end
 end
 
 def get_entries(dir, max_depth)
