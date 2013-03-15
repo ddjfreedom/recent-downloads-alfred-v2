@@ -30,8 +30,8 @@ module RDW
       if File.exist? @config_file_path
         @config = File.open(@config_file_path, "r") {|f| YAML.load f}
       else
-        @config = {"install_action" => "ask",
-                   "auto_start"     => "ask",
+        @config = {"install_action" => "open",
+                   "auto_start"     => "never",
                    "subfolders"     => :none}
         self.commit
       end
