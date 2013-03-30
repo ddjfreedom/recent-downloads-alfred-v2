@@ -71,6 +71,7 @@ results.delete_if {|x| (File.basename(x) =~ pattern) == nil}
 # construct feedback
 feedback = Feedback.new
 if results.length > 0
+  results = results.first($config['max-entries']) if $config['max-entries'] != :all
   results.each do |path|
     fullpath = File.expand_path path
     feedback.add_item({:title => File.basename(path), :subtitle => path, :arg => fullpath,

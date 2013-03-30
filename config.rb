@@ -10,11 +10,11 @@ module RDW
   def RDW.hidden?(path)
     File.basename(path).start_with?(".")
   end
-  
+
   def RDW.entries(path, base = "")
     Dir.entries(File.expand_path path, base).delete_if {|f| RDW.hidden? f}
   end
-  
+
   class Config
     BUNDLE_ID       = "recentdownloads.ddjfreedom"
     VOLATILE_DIR    = File.expand_path BUNDLE_ID, "~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/"
@@ -27,14 +27,13 @@ module RDW
     def initialize
       @config_file_path = File.expand_path "config.yaml", NONVOLATILE_DIR
       @base_dir = File.expand_path "~/Downloads"
-      if File.exist? @config_file_path
-        @config = File.open(@config_file_path, "r") {|f| YAML.load f}
-      else
-        @config = {"install_action" => "open",
-                   "auto_start"     => "never",
-                   "subfolders"     => :none}
-        self.commit
-      end
+      @config = {}
+      @config = File.open(@config_file_path, "r") {|f| YAML.load f} if File.exist? @config_file_path
+      @config['install_action'] ||= 'open'
+      @config['auto_start']     ||= 'never'
+      @config['subfolders']     ||= :none
+      @config['max-entries']    ||= 20
+      self.commit
       self.standardize
     end
 

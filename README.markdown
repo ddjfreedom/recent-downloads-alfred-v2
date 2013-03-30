@@ -26,6 +26,7 @@ The installation behavior can be controlled by `config.yaml` at
 | `install_action` | `ask`, `install`, `open` |
 | `auto_start` | `ask`, `always`, `never`|
 | `subfolders` | `:all`, `:none`, a list of entries |
+| `max-entries`| `:all`, integer for the number of results |
 
 ## Subfolders
 Recent Downloads workflow can display items in some specified subfolders along with everything in `~/Downloads`. The value for `subfolders` in `config.yaml` can be `:all`, `:none`, or a list of entries. Each entry can be a path or a hash:
