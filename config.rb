@@ -29,11 +29,12 @@ module RDW
       @base_dir = File.expand_path "~/Downloads"
       @config = {}
       @config = File.open(@config_file_path, "r") {|f| YAML.load f} if File.exist? @config_file_path
+      original_config = @config.dup
       @config['install_action'] ||= 'open'
       @config['auto_start']     ||= 'never'
       @config['subfolders']     ||= :none
       @config['max-entries']    ||= 20
-      self.commit
+      self.commit unless @config == original_config
       self.standardize
     end
 
