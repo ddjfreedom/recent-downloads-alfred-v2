@@ -50,22 +50,25 @@ entries.uniq!
 results = results & entries # remove entries that are no longer in the Downloads folder
 entries = entries - results # process only newer ones
 
-escaped_entries = entries.map do |entry|
-  Shellwords.escape(entry)
-end
-
-time_values = `mdls -name kMDItemDateAdded -raw #{escaped_entries.join(' ')}`.split("\0")
-
-entries = entries.each_with_index.map do |entry, i|
-  if time_values[i] == "(null)"
-    time = File.mtime entry
-  else
-    time = Time.parse time_values[i]
+if entries.length > 0
+  escaped_entries = entries.map do |entry|
+    Shellwords.escape(entry)
   end
-  {:name => entry, :time_added => time}
+
+  time_values = `mdls -name kMDItemDateAdded -raw #{escaped_entries.join(' ')}`.split("\0")
+
+  entries = entries.each_with_index.map do |entry, i|
+    if time_values[i] == "(null)"
+      time = File.mtime entry
+    else
+      time = Time.parse time_values[i]
+    end
+    {:name => entry, :time_added => time}
+  end
+
+  entries.sort! {|x, y| y[:time_added] <=> x[:time_added]}
 end
 
-entries.sort! {|x, y| y[:time_added] <=> x[:time_added]}
 results = entries.collect! {|x| x[:name]} + results
 File.open(Data_File, "w") do |file|
   results.each {|x| file.puts x}
