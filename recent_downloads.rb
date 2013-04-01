@@ -1,5 +1,6 @@
 require 'time'
 require 'find'
+require 'shellwords'
 load "alfred_feedback.rb"
 load "config.rb"
 
@@ -10,14 +11,6 @@ Data_File = File.expand_path "recent_downloads.txt", RDW::Config::VOLATILE_DIR
 DIR = File.expand_path "~/Downloads"
 
 Dir.chdir DIR
-def time_added(entry)
-  time = `mdls -name kMDItemDateAdded -raw "#{entry}"`
-  if time == "(null)"
-    return File.mtime entry
-  else
-    return Time.parse time
-  end
-end
 
 def get_entries(dir, max_depth)
   xs = []
@@ -57,7 +50,21 @@ entries.uniq!
 results = results & entries # remove entries that are no longer in the Downloads folder
 entries = entries - results # process only newer ones
 
-entries.collect! {|x| {:name => x, :time_added => time_added(x)}}
+escaped_entries = entries.map do |entry|
+  Shellwords.escape(entry)
+end
+
+time_values = `mdls -name kMDItemDateAdded -raw #{escaped_entries.join(' ')}`.split("\0")
+
+entries = entries.each_with_index.map do |entry, i|
+  if time_values[i] == "(null)"
+    time = File.mtime entry
+  else
+    time = Time.parse time_values[i]
+  end
+  {:name => entry, :time_added => time}
+end
+
 entries.sort! {|x, y| y[:time_added] <=> x[:time_added]}
 results = entries.collect! {|x| x[:name]} + results
 File.open(Data_File, "w") do |file|
