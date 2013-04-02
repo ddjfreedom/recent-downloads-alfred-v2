@@ -3,6 +3,7 @@ require 'find'
 require 'shellwords'
 load "alfred_feedback.rb"
 load "config.rb"
+load "download_progress.rb"
 
 $config = RDW::Config.new
 
@@ -84,8 +85,12 @@ if results.length > 0
   results = results.first($config['max-entries']) if $config['max-entries'] != :all
   results.each do |path|
     fullpath = File.expand_path path
-    feedback.add_item({:title => File.basename(path), :subtitle => path, :arg => fullpath,
-                        :icon => {:type => "fileicon", :name => fullpath}})
+    if path[path.length - 9, 9] == '.download'
+      feedback.add_item(download_item(fullpath))
+    else
+      feedback.add_item({:title => File.basename(path), :subtitle => path, :arg => fullpath,
+                          :icon => {:type => "fileicon", :name => fullpath}})
+    end
   end
 else
   feedback.add_item({:title => "No Match", :valid => "no"})
