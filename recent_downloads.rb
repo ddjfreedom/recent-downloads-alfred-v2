@@ -3,6 +3,7 @@ require 'find'
 require 'shellwords'
 load "alfred_feedback.rb"
 load "config.rb"
+load "download_progress.rb"
 
 $config = RDW::Config.new
 
@@ -50,22 +51,25 @@ entries.uniq!
 results = results & entries # remove entries that are no longer in the Downloads folder
 entries = entries - results # process only newer ones
 
-escaped_entries = entries.map do |entry|
-  Shellwords.escape(entry)
-end
-
-time_values = `mdls -name kMDItemDateAdded -raw #{escaped_entries.join(' ')}`.split("\0")
-
-entries = entries.each_with_index.map do |entry, i|
-  if time_values[i] == "(null)"
-    time = File.mtime entry
-  else
-    time = Time.parse time_values[i]
+if entries.length > 0
+  escaped_entries = entries.map do |entry|
+    Shellwords.escape(entry)
   end
-  {:name => entry, :time_added => time}
+
+  time_values = `mdls -name kMDItemDateAdded -raw #{escaped_entries.join(' ')}`.split("\0")
+
+  entries = entries.each_with_index.map do |entry, i|
+    if time_values[i] == "(null)"
+      time = File.mtime entry
+    else
+      time = Time.parse time_values[i]
+    end
+    {:name => entry, :time_added => time}
+  end
+
+  entries.sort! {|x, y| y[:time_added] <=> x[:time_added]}
 end
 
-entries.sort! {|x, y| y[:time_added] <=> x[:time_added]}
 results = entries.collect! {|x| x[:name]} + results
 File.open(Data_File, "w") do |file|
   results.each {|x| file.puts x}
@@ -81,8 +85,12 @@ if results.length > 0
   results = results.first($config['max-entries']) if $config['max-entries'] != :all
   results.each do |path|
     fullpath = File.expand_path path
-    feedback.add_item({:title => File.basename(path), :subtitle => path, :arg => fullpath,
-                        :icon => {:type => "fileicon", :name => fullpath}})
+    if path[path.length - 9, 9] == '.download'
+      feedback.add_item(download_item(fullpath))
+    else
+      feedback.add_item({:title => File.basename(path), :subtitle => path, :arg => fullpath,
+                          :icon => {:type => "fileicon", :name => fullpath}})
+    end
   end
 else
   feedback.add_item({:title => "No Match", :valid => "no"})
