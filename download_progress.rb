@@ -28,6 +28,8 @@ module OSXBytes
   # 
   # 1 KB = 1000 bytes, as in OS X 10.6 and up
   def self.format(bytes)
+    return "0 bytes" if bytes < 1
+
     units = %w[B KB MB GB TB]
     
     max_exp = units.size - 1
@@ -51,21 +53,35 @@ module OSXBytes
 end
 
 def download_item(path)
-  downloaded_file = "#{path}/#{path.split('/').last.chomp('.download')}"
-  plist_file = "#{path}/Info.plist"
-  total_size = `/usr/libexec/PlistBuddy -c Print:DownloadEntryProgressTotalToLoad "#{plist_file}"`.to_f
-  current_size = File::stat(downloaded_file).size
-  percent = (current_size / total_size) * 100
-  icon = "/Applications/Safari.app/Contents/Resources/download#{(percent / 10).floor}.icns"
-  
-  {
-    :title => File.basename(path).chomp('.download'),
-    :subtitle => "Download is %0.1f%% complete — %s of %s" % [
-      percent,
-      OSXBytes::format(current_size),
-      OSXBytes::format(total_size)
-    ],
-    :arg => path,
-    :icon => {:name => icon}
-  }
+  begin
+    downloaded_file = "#{path}/#{path.split('/').last.chomp('.download')}"
+    plist_file = "#{path}/Info.plist"
+    total_size = `/usr/libexec/PlistBuddy -c Print:DownloadEntryProgressTotalToLoad "#{plist_file}"`.to_f
+    current_size = File::stat(downloaded_file).size
+
+    if total_size > 0
+      percent = (current_size / total_size) * 100
+      subtitle = "Download is %0.1f%% complete — %s of %s" % [
+        percent,
+        OSXBytes::format(current_size),
+        OSXBytes::format(total_size)
+      ]
+    else
+      # Set a fake percentage to show a generic download icon
+      percent = 100
+      # We don't know the total size, so just display how much was downloaded
+      subtitle = "#{OSXBytes::format(current_size)} downloaded"
+    end
+
+    icon = "/Applications/Safari.app/Contents/Resources/download#{(percent / 10).floor}.icns"
+    
+    {
+      :title => File.basename(path).chomp('.download'),
+      :subtitle => subtitle,
+      :arg => path,
+      :icon => {:name => icon}
+    }
+  rescue
+    nil
+  end
 end

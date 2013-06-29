@@ -85,8 +85,8 @@ if results.length > 0
   results = results.first($config['max-entries']) if $config['max-entries'] != :all
   results.each do |path|
     fullpath = File.expand_path path
-    if path[path.length - 9, 9] == '.download'
-      feedback.add_item(download_item(fullpath))
+    if path[path.length - 9, 9] == '.download' && dl_item = download_item(fullpath)
+      feedback.add_item(dl_item)
     else
       feedback.add_item({:title => File.basename(path), :subtitle => path, :arg => fullpath,
                           :icon => {:type => "fileicon", :name => fullpath}})
