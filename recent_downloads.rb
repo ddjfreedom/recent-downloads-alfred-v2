@@ -5,6 +5,9 @@ load "alfred_feedback.rb"
 load "config.rb"
 load "download_progress.rb"
 
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
 $config = RDW::Config.new
 
 Data_File = File.expand_path "recent_downloads.txt", RDW::Config::VOLATILE_DIR
