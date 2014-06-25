@@ -62,7 +62,7 @@ if entries.length > 0
   time_values = `mdls -name kMDItemDateAdded -raw #{escaped_entries.join(' ')}`.split("\0")
 
   entries = entries.each_with_index.map do |entry, i|
-    if time_values[i] == "(null)"
+    if time_values[i] == "(null)" || time_values[i].nil?
       time = File.mtime entry
     else
       time = Time.parse time_values[i]
