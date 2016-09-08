@@ -18,8 +18,8 @@ module RDW
   class Config
     BUNDLE_ID          = "recentdownloads.ddjfreedom"
     ALFRED_3_DIR       = File.expand_path "~/Library/Application Support/Alfred 3/"
-    VOLATILE_DIR_A2		 = File.expand_path BUNDLE_ID, "~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/"
-    VOLATILE_DIR_A3		 = File.expand_path BUNDLE_ID, "~/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/"
+    VOLATILE_DIR_A2    = File.expand_path BUNDLE_ID, "~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/"
+    VOLATILE_DIR_A3    = File.expand_path BUNDLE_ID, "~/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/"
     NONVOLATILE_DIR_A2 = File.expand_path BUNDLE_ID, "~/Library/Application Support/Alfred 2/Workflow Data/"
     NONVOLATILE_DIR_A3 = File.expand_path BUNDLE_ID, "~/Library/Application Support/Alfred 3/Workflow Data/"
     VOLATILE_DIR       = (File.exist? ALFRED_3_DIR) ? VOLATILE_DIR_A3 : VOLATILE_DIR_A2
